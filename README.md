@@ -11,9 +11,8 @@
 ## Установка и запуск
 
 1. Клонируйте репозиторий:
-   ```bash git clone https://github.com/Gleb-Pinchuk/JAngo2.git
-   cd JAngo2
-   
+ git clone https://github.com/Gleb-Pinchuk/JAngo2.git
+ 
 2. Установите зависимости:
   pip install -r requirements.txt
 
