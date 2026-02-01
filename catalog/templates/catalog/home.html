@@ -23,7 +23,7 @@
               {{ product.description|default:"Описание отсутствует"|truncatechars:100 }}
             </p>
             <p><strong>Цена:</strong> {{ product.price }} ₽</p>
-            <a href="{% url 'product_detail' product_id=product.id %}" class="btn btn-primary mt-auto">Подробнее</a>
+           <a href="{% url 'catalog:product_detail' pk=product.id %}" class="btn btn-primary mt-auto">Подробнее</a>
           </div>
         </div>
       </div>

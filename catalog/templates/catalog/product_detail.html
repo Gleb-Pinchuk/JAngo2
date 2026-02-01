@@ -20,7 +20,7 @@
         <p><strong>Дата создания:</strong> {{ product.created_at|date:"d.m.Y H:i" }}</p>
         <p><strong>Описание:</strong></p>
         <p>{{ product.description|default:"Описание отсутствует" }}</p>
-        <a href="{% url 'home' %}" class="btn btn-secondary">← Назад к товарам</a>
+        <a href="{% url 'catalog:home' %}" class="btn btn-secondary">← Назад</a>
     </div>
 </div>
 {% endblock %}
