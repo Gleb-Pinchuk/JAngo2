@@ -1,35 +1,23 @@
-{% extends "catalog/base.html" %}
+{% for product in products %}
+  <div class="col-md-4 mb-4">
+    <div class="card h-100 shadow-sm">
+      {% if product.image %}
+        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 180px; object-fit: cover;">
+      {% else %}
+        <div class="card-header bg-light text-center">Нет изображения</div>
+      {% endif %}
+      <div class="card-body d-flex flex-column">
+        <h5 class="card-title">{{ product.name }}</h5>
+        <p class="card-text flex-grow-1">
+          {{ product.description|default:"Описание отсутствует"|truncatechars:100 }}
+        </p>
+        <p><strong>Цена:</strong> {{ product.price }} ₽</p>
 
-{% block title %}Главная{% endblock %}
-
-{% block content %}
-<h1>Добро пожаловать!</h1>
-<p>Это домашняя страница вашего Django-проекта.</p>
-
-<h2>Каталог товаров</h2>
-{% if products %}
-  <div class="row">
-    {% for product in products %}
-      <div class="col-md-4 mb-4">
-        <div class="card h-100 shadow-sm">
-          {% if product.image %}
-            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 180px; object-fit: cover;">
-          {% else %}
-            <div class="card-header bg-light text-center">Нет изображения</div>
-          {% endif %}
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title">{{ product.name }}</h5>
-            <p class="card-text flex-grow-1">
-              {{ product.description|default:"Описание отсутствует"|truncatechars:100 }}
-            </p>
-            <p><strong>Цена:</strong> {{ product.price }} ₽</p>
-           <a href="{% url 'catalog:product_detail' pk=product.id %}" class="btn btn-primary mt-auto">Подробнее</a>
-          </div>
-        </div>
+        <!-- Показываем "Подробнее" ТОЛЬКО авторизованным -->
+        {% if user.is_authenticated %}
+          <a href="{% url 'catalog:product_detail' pk=product.pk %}" class="btn btn-primary mt-auto">Подробнее</a>
+        {% endif %}
       </div>
-    {% endfor %}
+    </div>
   </div>
-{% else %}
-  <p class="text-muted">Нет товаров в каталоге.</p>
-{% endif %}
-{% endblock %}
+{% endfor %}
