@@ -1,4 +1,3 @@
-<!-- catalog/templates/catalog/base.html -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -9,20 +8,17 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-    <!-- Шапка -->
     <header class="bg-primary text-white py-2">
         <div class="container">
             {% include "catalog/menu.html" %}
         </div>
     </header>
 
-    <!-- Основной контент -->
     <main class="container my-4">
         {% block content %}
         {% endblock %}
     </main>
 
-    <!-- Подвал -->
     <footer class="bg-light border-top py-3 mt-5">
         <div class="container text-center text-muted">
             &copy; {% now "Y" %} Мой Сайт. Все права защищены.
