@@ -1,0 +1,7 @@
+<h1>Удалить запись "{{ object.title }}"?</h1>
+<form method="post">
+    {% csrf_token %}
+    <p>Вы уверены, что хотите удалить эту запись?</p>
+    <button type="submit" class="btn btn-danger">Да, удалить</button>
+    <a href="{% url 'blog:blogpost_list' %}" class="btn btn-secondary">Отмена</a>
+</form>

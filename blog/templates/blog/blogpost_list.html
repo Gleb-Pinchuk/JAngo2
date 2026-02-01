@@ -1,0 +1,18 @@
+<h1>Блог</h1>
+<a href="{% url 'blog:blogpost_create' %}" class="btn btn-success mb-3">Новая запись</a>
+{% for post in posts %}
+  <div class="card mb-3">
+    {% if post.preview %}
+      <img src="{{ post.preview.url }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+    {% endif %}
+    <div class="card-body">
+      <h5 class="card-title">{{ post.title }}</h5>
+      <p class="text-muted">{{ post.created_at|date:"d.m.Y" }} | Просмотров: {{ post.views_count }}</p>
+      <a href="{% url 'blog:blogpost_detail' post.pk %}" class="btn btn-primary">Читать</a>
+      <a href="{% url 'blog:blogpost_update' post.pk %}" class="btn btn-warning">Редактировать</a>
+      <a href="{% url 'blog:blogpost_delete' post.pk %}" class="btn btn-danger">Удалить</a>
+    </div>
+  </div>
+{% empty %}
+  <p>Нет опубликованных записей.</p>
+{% endfor %}
