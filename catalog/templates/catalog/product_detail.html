@@ -17,10 +17,42 @@
         <h1>{{ product.name }}</h1>
         <p><strong>Категория:</strong> {{ product.category.name }}</p>
         <p><strong>Цена:</strong> {{ product.price }} ₽</p>
+        <p><strong>Владелец:</strong> {{ product.owner.username }}</p>
+        <p><strong>Статус:</strong>
+            {% if product.is_published %}
+                <span class="text-success">Опубликован</span>
+            {% else %}
+                <span class="text-warning">Не опубликован</span>
+            {% endif %}
+        </p>
         <p><strong>Дата создания:</strong> {{ product.created_at|date:"d.m.Y H:i" }}</p>
         <p><strong>Описание:</strong></p>
         <p>{{ product.description|default:"Описание отсутствует" }}</p>
-        <a href="{% url 'catalog:home' %}" class="btn btn-secondary">← Назад</a>
+
+        <div class="mt-4">
+            <!-- Кнопка редактирования: только владелец -->
+            {% if user == product.owner %}
+                <a href="{% url 'product_update' pk=product.pk %}" class="btn btn-primary">Редактировать</a>
+            {% endif %}
+
+            <!-- Кнопка "Снять с публикации": только модератор -->
+            {% if perms.catalog.can_unpublish_product and product.is_published %}
+                <form method="post" action="{% url 'unpublish_product' pk=product.pk %}" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-warning ms-2">Снять с публикации</button>
+                </form>
+            {% endif %}
+
+            <!-- Кнопка удаления: владелец ИЛИ модератор -->
+            {% if user == product.owner or perms.catalog.delete_product %}
+                <a href="{% url 'product_delete' pk=product.pk %}" class="btn btn-danger ms-2"
+                   onclick="return confirm('Удалить товар?')">
+                    Удалить
+                </a>
+            {% endif %}
+        </div>
+
+        <a href="{% url 'home' %}" class="btn btn-secondary mt-3">← Назад к товарам</a>
     </div>
 </div>
 {% endblock %}
